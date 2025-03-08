@@ -45,17 +45,16 @@ class ActionButtons extends StatelessWidget {
             'Directions',
             true,
             () async {
-              // Open Google Maps directions
-              final Uri uri = Uri.parse(
-                'https://www.google.com/maps/dir/?api=1&destination=${Uri.encodeComponent('${context.findAncestorWidgetOfExactType<DetailScreen>()?.placeId ?? ''}')}',
-              );
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Could not launch directions')),
-                );
-              }
+              // final Uri uri = Uri.parse(
+              //   'https://www.google.com/maps/dir/?api=1&destination=${Uri.encodeComponent('${context.findAncestorWidgetOfExactType<DetailScreen>()?.placeId ?? ''}')}',
+              // );
+              // if (await canLaunchUrl(uri)) {
+              //   await launchUrl(uri, mode: LaunchMode.externalApplication);
+              // } else {
+              //   ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text('Could not launch directions')),
+              //   );
+              // }
             },
           ),
           _buildActionButton(

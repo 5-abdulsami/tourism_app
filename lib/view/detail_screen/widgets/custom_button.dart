@@ -6,10 +6,10 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +18,12 @@ class CustomButton extends StatelessWidget {
       width: size.width * 0.86,
       height: size.height * 0.075,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            darkBlueColor,
-            lightBlueColor, // Dark blue
-            skyBlueColor, lightSkyBlueColor, // Light blue
-          ],
-        ),
+        gradient: AppColors.scafoldBackGroundGrandient,
         borderRadius: BorderRadius.circular(
             28), // Half of the height for perfect rounding
         boxShadow: [
           BoxShadow(
-            color: blackColor.withValues(alpha: 0.4),
+            color: AppColors.jetBlack.withValues(alpha: 0.4),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

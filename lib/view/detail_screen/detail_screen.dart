@@ -62,8 +62,8 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             // Map Section
             MapWithPolyline(
-              destinationLat: _place!.geometry.location.lat,
-              destinationLng: _place!.geometry.location.lng,
+              destinationLat: _place!.latitude,
+              destinationLng: _place!.longitude,
               destinationName: _place!.name,
             ),
 
@@ -96,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> {
       body: Container(
         decoration: _buildGradientBackground(),
         child: const Center(
-          child: CircularProgressIndicator(color: whiteColor),
+          child: CircularProgressIndicator(color: AppColors.whiteBar),
         ),
       ),
     );
@@ -110,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
           child: Text(
             _errorMessage ?? 'Place not found',
             style: const TextStyle(
-              color: whiteColor,
+              color: AppColors.whiteBar,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -142,17 +142,14 @@ class _DetailScreenState extends State<DetailScreen> {
 
   Widget _buildImageGrid() {
     return ImageGrid(
-      photoReferences: _place!.photos != null
-          ? _place!.photos!.map((photo) => photo.photoReference).toList()
-          : [],
+      photoReferences: _place!.photoReferences ?? [],
     );
   }
 
   Widget _buildActionButtons() {
     return ActionButtons(
-      phoneNumber:
-          _place!.openingHours?.openNow == true ? "Open Now" : "Closed",
-      website: _place!.plusCode?.globalCode ?? "No Website",
+      phoneNumber: _place!.phoneNumber ?? "No Contact Info",
+      website: _place!.website ?? "No Website",
     );
   }
 
@@ -160,7 +157,7 @@ class _DetailScreenState extends State<DetailScreen> {
     return QuickFact(
       rating: _place!.rating ?? 0.0,
       reviewCount: _place!.userRatingsTotal ?? 0,
-      address: _place!.vicinity,
+      address: _place!.address ?? "No Address Available",
       openNow: _place!.openingHours?.openNow ?? false,
     );
   }
@@ -182,12 +179,6 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   BoxDecoration _buildGradientBackground() {
-    return const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [lightBlueColor, skyBlueColor, lightSkyBlueColor],
-      ),
-    );
+    return const BoxDecoration(gradient: AppColors.scafoldBackGroundGrandient);
   }
 }

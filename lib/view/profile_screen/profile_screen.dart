@@ -11,16 +11,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              darkBlueColor, // Dark purple/blue at top
-              Color(0xFF0088CC), // Light blue at bottom
-            ],
-          ),
-        ),
+        decoration:
+            BoxDecoration(gradient: AppColors.scafoldBackGroundGrandient),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -47,11 +39,11 @@ class ProfileScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         onPressed: () {},
-        backgroundColor: darkBlueColor,
+        backgroundColor: AppColors.primaryAppBar,
         shape: const CircleBorder(),
         child: Icon(
           Icons.add,
-          color: lightSkyBlueColor,
+          color: AppColors.mutedElements,
           size: 35,
         ),
       ),

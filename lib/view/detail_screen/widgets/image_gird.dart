@@ -68,8 +68,7 @@ class ImageGrid extends StatelessWidget {
                     children: [
                       InteractiveViewer(
                         child: Image.network(
-                          MapsService.getPhotoUrl(displayPhotos[index],
-                              maxWidth: 800),
+                          'https://p.imgci.com/db/PICTURES/CMS/308100/308189.15.jpg',
                           fit: BoxFit.contain,
                           width: double.infinity,
                           height: double.infinity,
@@ -91,7 +90,7 @@ class ImageGrid extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                MapsService.getPhotoUrl(displayPhotos[index]),
+                'https://p.imgci.com/db/PICTURES/CMS/308100/308189.15.jpg',
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;

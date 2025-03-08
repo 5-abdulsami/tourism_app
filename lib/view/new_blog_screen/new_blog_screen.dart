@@ -13,18 +13,13 @@ class NewBlogScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Create New Blog',
-          style: TextStyle(color: whiteColor),
+          style: TextStyle(color: AppColors.whiteBar),
         ),
-        backgroundColor: darkBlueColor,
+        backgroundColor: AppColors.primaryAppBar,
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [darkBlueColor, lightBlueColor, skyBlueColor],
-          ),
-        ),
+        decoration:
+            BoxDecoration(gradient: AppColors.scafoldBackGroundGrandient),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -104,7 +99,7 @@ class NewBlogScreen extends StatelessWidget {
             top: 30,
             bottom: 0,
             width: 2,
-            child: Container(color: skyBlueColor),
+            child: Container(color: AppColors.mutedElements),
           ),
         Column(
           children: [
@@ -116,13 +111,13 @@ class NewBlogScreen extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: skyBlueColor,
+                    color: AppColors.mutedElements,
                   ),
                   child: Center(
                     child: Text(
                       stepNumber.toString(),
                       style: const TextStyle(
-                        color: whiteColor,
+                        color: AppColors.whiteBar,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -136,7 +131,7 @@ class NewBlogScreen extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                          color: whiteColor,
+                          color: AppColors.whiteBar,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),

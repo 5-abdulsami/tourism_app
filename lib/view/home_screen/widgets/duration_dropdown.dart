@@ -6,10 +6,10 @@ class DurationDropdown extends StatelessWidget {
   final Function(String) onChanged;
 
   const DurationDropdown({
-    Key? key,
+    super.key,
     required this.selectedDuration,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class DurationDropdown extends StatelessWidget {
       width: size.width * 0.3,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        border: Border.all(color: whiteColor, width: 1.5),
+        border: Border.all(color: AppColors.whiteBar, width: 1.5),
         borderRadius: BorderRadius.circular(25),
       ),
       child: DropdownButtonHideUnderline(
@@ -40,14 +40,14 @@ class DurationDropdown extends StatelessWidget {
           value: selectedDuration,
           icon: const Icon(
             Icons.keyboard_arrow_down,
-            color: Colors.white,
+            color: AppColors.whiteBar,
             weight: 2,
           ),
           style: const TextStyle(
-            color: Colors.white,
+            color: AppColors.whiteBar,
             fontSize: 16,
           ),
-          dropdownColor: skyBlueColor.withOpacity(0.6),
+          dropdownColor: AppColors.mutedElements.withValues(alpha: 0.6),
           items: durations.map((String duration) {
             return DropdownMenuItem<String>(
               value: duration,

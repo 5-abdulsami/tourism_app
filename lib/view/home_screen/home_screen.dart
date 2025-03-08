@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Column(
         children: [
@@ -96,22 +95,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [darkBlueColor, lightBlueColor],
-              ),
+              gradient: AppColors.scafoldBackGroundGrandient,
             ),
             padding: EdgeInsets.only(
               left: size.width * 0.05,
-              top: size.height * 0.045,
-              bottom: size.height * 0.015,
+              top: size.height * 0.043,
+              bottom: size.height * 0.013,
             ),
             child: const Text(
               "Let's Explore",
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
+                color: AppColors.whiteBar,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -119,39 +114,40 @@ class _HomeScreenState extends State<HomeScreen> {
           // Main Content with Background Gradient
           Expanded(
             child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.05,
+              ),
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [darkBlueColor, lightBlueColor],
-                ),
+                gradient: AppColors.scafoldBackGroundGrandient,
               ),
               child: Column(
                 children: [
                   // Search Bar & Duration Dropdown
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.05,
-                      vertical: size.height * 0.02,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CustomSearchBar(onSearch: _onSearch),
-                        ),
-                        SizedBox(width: size.height * 0.01),
-                        DurationDropdown(
+                  CustomSearchBar(onSearch: _onSearch),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DurationDropdown(
                           selectedDuration: _selectedDuration,
                           onChanged: _onDurationChanged,
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width: size.height * 0.01),
+                      Icon(
+                        Icons.filter_alt_rounded,
+                        color: AppColors.whiteBar,
+                      ),
+                    ],
                   ),
                   // Display Content
                   Expanded(
                     child: _isLoading
                         ? const Center(
-                            child: CircularProgressIndicator(color: whiteColor),
+                            child: CircularProgressIndicator(
+                                color: AppColors.whiteBar),
                           )
                         : _errorMessage != null
                             ? Center(
@@ -169,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       'No places found',
                                       style: TextStyle(
-                                        color: whiteColor,
+                                        color: AppColors.whiteBar,
                                         fontSize: 16,
                                       ),
                                     ),
@@ -181,11 +177,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       final place = _places[index];
 
-                                      // Check if the place has photos
-                                      String imageUrl = place.photos != null &&
-                                              place.photos!.isNotEmpty
-                                          ? MapsService.getPhotoUrl(place
-                                              .photos!.first.photoReference)
+                                      // Fetch the first available photo reference
+                                      String imageUrl = (place
+                                                      .photoReferences !=
+                                                  null &&
+                                              place.photoReferences!.isNotEmpty)
+                                          ? MapsService.getPhotoUrl(
+                                              place.photoReferences!.first)
                                           : "https://tse4.mm.bing.net/th?id=OIP.EsYGO_6MShOkVMhbMe4KWwHaEQ&pid=Api&P=0&h=180";
 
                                       return PlaceCard(
@@ -195,8 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   DetailScreen(
-                                                placeId: place.placeId,
-                                              ),
+                                                      placeId: place.placeId),
                                             ),
                                           );
                                         },
@@ -206,13 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             0.0, // Default rating to 0.0 if null
                                         reviews: place.userRatingsTotal ??
                                             0, // Default to 0 if null
-                                        profileImageUrl: place.photos != null &&
-                                                place.photos!.isNotEmpty
-                                            ? MapsService.getPhotoUrl(
-                                                place.photos!.first
-                                                    .photoReference,
-                                                maxWidth: 100)
-                                            : "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/home-w9VNMtszvgQ27HzZ4RAesxZT804Edd.png",
+                                        profileImageUrl:
+                                            imageUrl, // Using same image for profile
                                       );
                                     },
                                   ),

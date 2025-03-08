@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/view/home_screen/home_screen.dart';
+import 'package:get/get.dart';
 import 'package:tourism_app/view/main_screen/main_screen.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tourism App',
       theme: ThemeData(

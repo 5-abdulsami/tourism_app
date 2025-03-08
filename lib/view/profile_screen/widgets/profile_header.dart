@@ -98,7 +98,7 @@ class ProfileHeader extends StatelessWidget {
                     Text(
                       'mrmanani143@gmail.com',
                       style: TextStyle(
-                        color: whiteColor.withValues(alpha: 0.9),
+                        color: AppColors.whiteBar.withValues(alpha: 0.9),
                         fontSize: 18,
                       ),
                     ),

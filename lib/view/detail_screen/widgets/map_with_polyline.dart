@@ -38,13 +38,13 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
 
   Future<void> _initMap() async {
     try {
-      final position = await MapsService.getCurrentLocation();
-      if (position != null) {
-        setState(() {
-          _currentPosition = LatLng(position.latitude, position.longitude);
-        });
-        await _getPolylinePoints();
-      }
+      // final position = await MapsService.getCurrentLocation();
+      // if (position != null) {
+      //   setState(() {
+      //     _currentPosition = LatLng(position.latitude, position.longitude);
+      //   });
+      //   await _getPolylinePoints();
+      // }
     } catch (e) {
       print('Error initializing map: $e');
     } finally {
@@ -76,38 +76,38 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
 
     // Get directions
     try {
-      final directions = await MapsService.getDirections(
-        _currentPosition!.latitude,
-        _currentPosition!.longitude,
-        widget.destinationLat,
-        widget.destinationLng,
-      );
+      // final directions = await MapsService.getDirections(
+      //   _currentPosition!.latitude,
+      //   _currentPosition!.longitude,
+      //   widget.destinationLat,
+      //   widget.destinationLng,
+      // );
 
-      if (directions != null) {
-        // Create polyline
-        List<LatLng> polylineCoordinates = [];
+      // if (directions != null) {
+      //   // Create polyline
+      //   List<LatLng> polylineCoordinates = [];
 
-        for (var point in directions.polylinePoints) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-        }
+      //   for (var point in directions.polylinePoints) {
+      //     polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      //   }
 
-        setState(() {
-          _polylines.add(
-            Polyline(
-              polylineId: const PolylineId('route'),
-              color: darkBlueColor,
-              points: polylineCoordinates,
-              width: 5,
-            ),
-          );
+      //   setState(() {
+      //     _polylines.add(
+      //       Polyline(
+      //         polylineId: const PolylineId('route'),
+      //         color: AppColors.primaryAppBar,
+      //         points: polylineCoordinates,
+      //         width: 5,
+      //       ),
+      //     );
 
-          _travelDuration = directions.durationText;
-          _travelDistance = directions.distanceText;
-        });
+      //     _travelDuration = directions.durationText;
+      //     _travelDistance = directions.distanceText;
+      //   });
 
-        // Zoom to fit the route
-        _fitBounds();
-      }
+      //   // Zoom to fit the route
+      //   _fitBounds();
+      // }
     } catch (e) {
       print('Error getting directions: $e');
     }
@@ -148,9 +148,9 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
     if (_isLoading) {
       return Container(
         height: size.height * 0.4,
-        color: lightBlueColor,
+        color: AppColors.mutedElements,
         child: const Center(
-          child: CircularProgressIndicator(color: whiteColor),
+          child: CircularProgressIndicator(color: AppColors.whiteBar),
         ),
       );
     }
@@ -158,11 +158,11 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
     if (_currentPosition == null) {
       return Container(
         height: size.height * 0.4,
-        color: lightBlueColor,
+        color: AppColors.mutedElements,
         child: const Center(
           child: Text(
             'Unable to get current location',
-            style: TextStyle(color: whiteColor),
+            style: TextStyle(color: AppColors.whiteBar),
           ),
         ),
       );
@@ -197,7 +197,7 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: darkBlueColor.withOpacity(0.8),
+                color: AppColors.primaryAppBar.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -210,19 +210,19 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
                       Text(
                         'Your Location',
                         style: TextStyle(
-                          color: whiteColor,
+                          color: AppColors.whiteBar,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Icon(
                         Icons.arrow_downward,
-                        color: whiteColor,
+                        color: AppColors.whiteBar,
                         size: 16,
                       ),
                       Text(
                         widget.destinationName,
                         style: TextStyle(
-                          color: whiteColor,
+                          color: AppColors.whiteBar,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -235,14 +235,14 @@ class _MapWithPolylineState extends State<MapWithPolyline> {
                       Text(
                         _travelDistance,
                         style: TextStyle(
-                          color: whiteColor,
+                          color: AppColors.whiteBar,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         _travelDuration,
                         style: TextStyle(
-                          color: whiteColor,
+                          color: AppColors.whiteBar,
                         ),
                       ),
                     ],

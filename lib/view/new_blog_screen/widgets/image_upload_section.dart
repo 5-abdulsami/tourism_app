@@ -39,7 +39,7 @@ class _ImageUploadSectionState extends State<ImageUploadSection> {
                   width: 100,
                   margin: const EdgeInsets.only(right: 8),
                   decoration: BoxDecoration(
-                    color: lightSkyBlueColor.withValues(alpha: 0.3),
+                    color: AppColors.mutedElements.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: IconButton(

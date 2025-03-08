@@ -1,156 +1,117 @@
+import 'dart:convert';
+
 class PlaceModel {
-  final String name;
-  final String? businessStatus;
-  final Geometry geometry;
-  final String? icon;
-  final String? iconBackgroundColor;
-  final String? iconMaskBaseUri;
-  final OpeningHours? openingHours;
-  final List<Photo>? photos;
   final String placeId;
-  final PlusCode? plusCode;
+  final String name;
   final double? rating;
-  final String reference;
-  final String scope;
-  final List<String> types;
   final int? userRatingsTotal;
-  final String vicinity;
+  final String? phoneNumber;
+  final String? address;
+  final double latitude;
+  final double longitude;
+  final List<String>? photoReferences;
+  final List<String>? types;
+  final String? website;
+  final String? url;
+  final int? priceLevel;
+  final bool? permanentlyClosed;
+  final String? businessStatus;
+  final List<Review>? reviews;
+  final OpeningHours? openingHours;
+  final String? editorialSummary;
 
   PlaceModel({
-    required this.name,
-    this.businessStatus,
-    required this.geometry,
-    this.icon,
-    this.iconBackgroundColor,
-    this.iconMaskBaseUri,
-    this.openingHours,
-    this.photos,
     required this.placeId,
-    this.plusCode,
+    required this.name,
+    required this.latitude,
+    required this.longitude,
     this.rating,
-    required this.reference,
-    required this.scope,
-    required this.types,
     this.userRatingsTotal,
-    required this.vicinity,
+    this.phoneNumber,
+    this.address,
+    this.photoReferences,
+    this.types,
+    this.website,
+    this.url,
+    this.priceLevel,
+    this.permanentlyClosed,
+    this.businessStatus,
+    this.reviews,
+    this.openingHours,
+    this.editorialSummary,
   });
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) {
     return PlaceModel(
-      name: json['name'],
-      businessStatus: json['business_status'],
-      geometry: Geometry.fromJson(json['geometry']),
-      icon: json['icon'],
-      iconBackgroundColor: json['icon_background_color'],
-      iconMaskBaseUri: json['icon_mask_base_uri'],
-      openingHours: json['opening_hours'] != null
-          ? OpeningHours.fromJson(json['opening_hours'])
-          : null,
-      photos: json['photos'] != null
-          ? (json['photos'] as List).map((e) => Photo.fromJson(e)).toList()
-          : null,
       placeId: json['place_id'],
-      plusCode: json['plus_code'] != null
-          ? PlusCode.fromJson(json['plus_code'])
-          : null,
-      rating: (json['rating'] != null) ? json['rating'].toDouble() : null,
-      reference: json['reference'],
-      scope: json['scope'],
-      types: List<String>.from(json['types']),
+      name: json['name'] ?? '',
+      latitude: json['geometry']['location']['lat'],
+      longitude: json['geometry']['location']['lng'],
+      rating: json['rating']?.toDouble(),
       userRatingsTotal: json['user_ratings_total'],
-      vicinity: json['vicinity'],
+      phoneNumber: json['formatted_phone_number'],
+      address: json['formatted_address'],
+      website: json['website'],
+      url: json['url'],
+      priceLevel: json['price_level'],
+      permanentlyClosed: json['permanently_closed'],
+      businessStatus: json['business_status'],
+      types: (json['types'] as List?)?.map((e) => e.toString()).toList(),
+      photoReferences: (json['photos'] as List?)
+          ?.map((e) => e['photo_reference'].toString())
+          .toList(),
+      editorialSummary: json['editorial_summary']?['overview'],
+      openingHours: json['current_opening_hours'] != null
+          ? OpeningHours.fromJson(json['current_opening_hours'])
+          : null,
+      reviews: json['reviews'] != null
+          ? (json['reviews'] as List)
+              .map((review) => Review.fromJson(review))
+              .toList()
+          : [],
     );
   }
 }
 
-class Geometry {
-  final Location location;
-  final Viewport viewport;
-
-  Geometry({required this.location, required this.viewport});
-
-  factory Geometry.fromJson(Map<String, dynamic> json) {
-    return Geometry(
-      location: Location.fromJson(json['location']),
-      viewport: Viewport.fromJson(json['viewport']),
-    );
-  }
-}
-
-class Location {
-  final double lat;
-  final double lng;
-
-  Location({required this.lat, required this.lng});
-
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-      lat: json['lat'].toDouble(),
-      lng: json['lng'].toDouble(),
-    );
-  }
-}
-
-class Viewport {
-  final Location northeast;
-  final Location southwest;
-
-  Viewport({required this.northeast, required this.southwest});
-
-  factory Viewport.fromJson(Map<String, dynamic> json) {
-    return Viewport(
-      northeast: Location.fromJson(json['northeast']),
-      southwest: Location.fromJson(json['southwest']),
-    );
-  }
-}
-
+// Opening Hours Model
 class OpeningHours {
   final bool openNow;
+  final List<String>? weekdayText;
 
-  OpeningHours({required this.openNow});
+  OpeningHours({required this.openNow, this.weekdayText});
 
   factory OpeningHours.fromJson(Map<String, dynamic> json) {
     return OpeningHours(
-      openNow: json['open_now'],
+      openNow: json['open_now'] ?? false,
+      weekdayText:
+          (json['weekday_text'] as List?)?.map((e) => e.toString()).toList(),
     );
   }
 }
 
-class Photo {
-  final int height;
-  final int width;
-  final List<String> htmlAttributions;
-  final String photoReference;
+// Reviews Model
+class Review {
+  final String authorName;
+  final double rating;
+  final String text;
+  final String? profilePhotoUrl;
+  final int time;
 
-  Photo({
-    required this.height,
-    required this.width,
-    required this.htmlAttributions,
-    required this.photoReference,
+  Review({
+    required this.authorName,
+    required this.rating,
+    required this.text,
+    this.profilePhotoUrl,
+    required this.time,
   });
 
-  factory Photo.fromJson(Map<String, dynamic> json) {
-    return Photo(
-      height: json['height'],
-      width: json['width'],
-      htmlAttributions:
-          List<String>.from(json['html_attributions'].map((e) => e.toString())),
-      photoReference: json['photo_reference'],
-    );
-  }
-}
-
-class PlusCode {
-  final String compoundCode;
-  final String globalCode;
-
-  PlusCode({required this.compoundCode, required this.globalCode});
-
-  factory PlusCode.fromJson(Map<String, dynamic> json) {
-    return PlusCode(
-      compoundCode: json['compound_code'],
-      globalCode: json['global_code'],
+  factory Review.fromJson(Map<String, dynamic> json) {
+    return Review(
+      authorName: json['author_name'] ?? 'Anonymous',
+      rating: json['rating']?.toDouble() ?? 0.0,
+      text: json['text'] ?? '',
+      profilePhotoUrl: json['profile_photo_url'],
+      time: json['time'],
     );
   }
 }

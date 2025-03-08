@@ -16,7 +16,7 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: darkBlueColor,
+        color: AppColors.cardBackground,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -52,13 +52,17 @@ class CustomBottomNavBar extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: isSelected ? lightSkyBlueColor : Colors.white60,
+            color: isSelected
+                ? AppColors.whiteBar
+                : AppColors.whiteBar.withValues(alpha: 0.6),
             size: 28,
           ),
           Text(
             label,
             style: TextStyle(
-              color: isSelected ? lightSkyBlueColor : Colors.white60,
+              color: isSelected
+                  ? AppColors.whiteBar
+                  : AppColors.whiteBar.withValues(alpha: 0.6),
               fontSize: 12,
             ),
           ),
@@ -73,17 +77,11 @@ class CustomBottomNavBar extends StatelessWidget {
       child: Container(
         width: 60,
         height: 60,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [lightBlueColor, lightSkyBlueColor],
-          ),
-        ),
+        decoration:
+            BoxDecoration(shape: BoxShape.circle, color: AppColors.whiteBar),
         child: const Icon(
           Icons.add,
-          color: Colors.white,
+          color: AppColors.cardBackground,
           size: 35,
         ),
       ),
